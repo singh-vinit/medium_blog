@@ -2,5 +2,5 @@ name = "backeng"
 compatibility_date = "2023-12-01"
 
 [vars]
-DATABASE_URL=""
-JWT_SECRET=""
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiNzllOTAxNWEtMDYyNy00MzQxLWIyMTQtY2Q5YTQyMTAxZDA3IiwidGVuYW50X2lkIjoiZWUxNmJiMzhjMWRjNzgyYzgxYjQ0MzIzZTZjNWVkOTYxYTE2NDAwODA0NGM1NDRjNGFkMTRmNDU1ODYyOTllMyIsImludGVybmFsX3NlY3JldCI6IjMxYmY5ZTNjLWZkN2UtNDcyYS05ZmQ3LTk4NjJlMjExNTJjMiJ9.e-FjMMquvn0JKbOdgW0btfV9frrw3fOe6mvwHVmhDBg"
+JWT_SECRET="vinit123"
