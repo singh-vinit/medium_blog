@@ -6,6 +6,7 @@ import AuthorSkeleton from "../components/AuthorSkeleton";
 const Blog = () => {
   const { id } = useParams();
   const { loading, blog } = useBlog(id || "");
+
   return (
     <div>
       {loading ? (

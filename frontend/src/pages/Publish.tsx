@@ -3,9 +3,15 @@ import { createBlogSchema } from "@vinit4/medium-common";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
+import { useAuth } from "../hooks/Auth";
 
 const Publish = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  if (!isAuthenticated) {
+    navigate("/signin");
+  }
+
   const [create, setCreate] = useState<createBlogSchema>({
     title: "",
     content: "",

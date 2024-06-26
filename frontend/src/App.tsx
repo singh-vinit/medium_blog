@@ -5,10 +5,21 @@ import Blogs from "./pages/Blogs";
 import Blog from "./pages/Blog";
 import Publish from "./pages/Publish";
 import Header from "./components/Header";
+import { AuthContext } from "./context/AuthContext";
+import { useState } from "react";
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+  function login() {
+    setIsAuthenticated(true);
+  }
+  function logout() {
+    setIsAuthenticated(false);
+  }
+
   return (
-    <>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       <BrowserRouter>
         {localStorage.getItem("token") ? <Header icon="v" /> : null}
         <Routes>
@@ -19,7 +30,7 @@ const App = () => {
           <Route path="/publish" element={<Publish />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </AuthContext.Provider>
   );
 };
 
