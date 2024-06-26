@@ -41,14 +41,14 @@ blogRouter.post("/", async (c) => {
   }
 
   try {
-    await prisma.post.create({
+    const post = await prisma.post.create({
       data: {
         title: body.title,
         content: body.content,
         authorId: c.get("jwtPayload"),
       },
     });
-    return c.json({ message: "post created!" }, 201);
+    return c.json({ id: post.id }, 201);
   } catch (error) {
     return c.json({ message: "internal server error" }, 500);
   }
@@ -81,7 +81,19 @@ blogRouter.get("/bulk", async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
   try {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        createdAt: true,
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
     return c.json({ posts }, 200);
   } catch (error) {
     return c.json({ message: "internal server error" }, 500);
@@ -96,6 +108,17 @@ blogRouter.get("/:id", async (c) => {
   try {
     const post = await prisma.post.findUnique({
       where: { id },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        createdAt: true,
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     return c.json({ post }, 200);
   } catch (error) {
