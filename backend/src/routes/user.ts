@@ -32,7 +32,7 @@ userRouter.post("/signup", async (c) => {
       data: { name: body.name, email: body.email, password: body.password },
     });
     const token = await sign({ id: user.id }, c.env.JWT_SECRET);
-    return c.json({ jwt: token }, 201);
+    return c.json({ jwt: token, name: user.name }, 201);
   }
 });
 
@@ -46,14 +46,14 @@ userRouter.post("/signin", async (c) => {
   if (!success) {
     return c.json({ message: "wrong inputs" }, 400);
   }
-  
+
   const user = await prisma.user.findUnique({ where: { email: body.email } });
   if (!user) {
     return c.json({ message: "wrong credentials" }, 403);
   }
   if (user.password === body.password) {
     const token = await sign({ id: user.id }, c.env.JWT_SECRET);
-    return c.json({ jwt: token }, 200);
+    return c.json({ jwt: token, name: user.name }, 200);
   } else {
     return c.json({ message: "wrong credentials" }, 403);
   }

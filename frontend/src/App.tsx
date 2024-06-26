@@ -17,11 +17,14 @@ const App = () => {
   function logout() {
     setIsAuthenticated(false);
   }
+  const user = localStorage.getItem("user");
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       <BrowserRouter>
-        {localStorage.getItem("token") ? <Header icon="v" /> : null}
+        {localStorage.getItem("token") ? (
+          <Header icon={user ? user[0] : ""} />
+        ) : null}
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />

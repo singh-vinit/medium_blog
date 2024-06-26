@@ -31,6 +31,7 @@ const Signup = () => {
       const res = await axios.post(`${BACKEND_URL}/user/signup`, data);
       const jwt = res.data.jwt;
       localStorage.setItem("token", jwt);
+      localStorage.setItem("user", res.data.name);
       login();
       navigate("/blogs");
     } catch (error: any) {
