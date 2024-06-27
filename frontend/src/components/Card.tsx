@@ -11,7 +11,7 @@ type Props = {
 const Card = ({ author, date, title, content, path }: Props) => {
   return (
     <Link to={`/blog/${path}`}>
-      <div className="max-w-2xl border bg-white p-4 mx-auto">
+      <div className="max-w-full p-4 md:max-w-2xl border bg-white md:mx-auto">
         <div className="flex gap-2 mb-4">
           <div className="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-300 rounded-full">
             <span className="text-black">{author[0]}</span>

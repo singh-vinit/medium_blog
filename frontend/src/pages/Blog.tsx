@@ -10,13 +10,13 @@ const Blog = () => {
   return (
     <div>
       {loading ? (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="md:grid md:grid-cols-4 gap-4">
           <BlogSkeleton />
           <AuthorSkeleton />
         </div>
       ) : (
-        <div className="grid grid-cols-4 gap-4">
-          <div className="col-span-3 p-4 rounded-md shadow-md bg-white">
+        <div className="md:grid md:grid-cols-4 gap-4">
+          <div className="md:col-span-3 p-4 rounded-md shadow-md bg-white">
             <div className="text-4xl text-black font-bold capitalize text-left">
               {blog.title}
             </div>
@@ -26,7 +26,7 @@ const Blog = () => {
             <div className="text-lg font-mediumt">{blog.content}</div>
           </div>
 
-          <div className="col-span-1 p-4 shadow-md bg-white">
+          <div className="md:col-span-1 p-4 shadow-md bg-white">
             <div className="text-lg font-light text-gray-600">Author</div>
             <div className="text-2xl font-bold text-black capitalize">
               {blog.author.name}

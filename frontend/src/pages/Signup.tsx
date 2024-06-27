@@ -24,23 +24,30 @@ const Signup = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function signupHandler() {
     const data = { name, email, password };
     try {
+      setIsLoading(true);
       const res = await axios.post(`${BACKEND_URL}/user/signup`, data);
+      setIsLoading(false);
       const jwt = res.data.jwt;
       localStorage.setItem("token", jwt);
       localStorage.setItem("user", res.data.name);
       login();
       navigate("/blogs");
     } catch (error: any) {
-      console.log(error.message);
+      alert(error.response.data.message);
+      setIsLoading(false);
+      setName("");
+      setEmail("");
+      setPassword("");
     }
   }
 
   return (
-    <div className="grid grid-cols-2 h-screen">
+    <div className="grid md:grid-cols-2 h-screen">
       {isAuthenticated ? <Navigate to="/blogs" /> : null}
       <div className="flex flex-col justify-center items-center">
         <Container>
@@ -50,14 +57,29 @@ const Signup = () => {
             linkText="Login"
             path="/signin"
           />
-          <InputField label="name" field="text" setValue={setName} />
-          <InputField label="email" field="email" setValue={setEmail} />
+          <InputField
+            label="author name"
+            field="text"
+            setValue={setName}
+            inputValue={name}
+          />
+          <InputField
+            label="email"
+            field="email"
+            setValue={setEmail}
+            inputValue={email}
+          />
           <InputField
             label="password"
             field="password"
             setValue={setPassword}
+            inputValue={password}
           />
-          <Button btnText="signup" handler={signupHandler} />
+          <Button
+            btnText="signup"
+            handler={signupHandler}
+            loading={isLoading}
+          />
         </Container>
       </div>
       <Quote />

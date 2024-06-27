@@ -23,22 +23,28 @@ const Signin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function signinHandler() {
     const data = { email, password };
     try {
+      setIsLoading(true);
       const res = await axios.post(`${BACKEND_URL}/user/signin`, data);
+      setIsLoading(false);
       const jwt = res.data.jwt;
       localStorage.setItem("token", jwt);
       localStorage.setItem("user", res.data.name);
       login();
       navigate("/blogs");
     } catch (error: any) {
-      console.log(error.message);
+      alert(error.response.data.message);
+      setIsLoading(false);
+      setEmail("");
+      setPassword("");
     }
   }
   return (
-    <div className="grid grid-cols-2 h-screen">
+    <div className="grid md:grid-cols-2 h-screen">
       {isAuthenticated ? <Navigate to="/blogs" /> : null}
       <div className="flex flex-col justify-center items-center">
         <Container>
@@ -48,13 +54,23 @@ const Signin = () => {
             linkText="Create"
             path="/signup"
           />
-          <InputField label="email" field="email" setValue={setEmail} />
+          <InputField
+            label="email"
+            field="email"
+            setValue={setEmail}
+            inputValue={email}
+          />
           <InputField
             label="password"
             field="password"
             setValue={setPassword}
+            inputValue={password}
           />
-          <Button btnText="signup" handler={signinHandler} />
+          <Button
+            btnText="signup"
+            handler={signinHandler}
+            loading={isLoading}
+          />
         </Container>
       </div>
       <Quote />
