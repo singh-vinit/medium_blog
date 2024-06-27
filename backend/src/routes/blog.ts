@@ -46,6 +46,7 @@ blogRouter.post("/", async (c) => {
         title: body.title,
         content: body.content,
         authorId: c.get("jwtPayload"),
+        published: true,
       },
     });
     return c.json({ id: post.id }, 201);
